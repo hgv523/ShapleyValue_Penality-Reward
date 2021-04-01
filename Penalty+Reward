@@ -1,0 +1,470 @@
+pragma solidity ^0.6.0;
+
+contract ShapleyValue {
+    event PayNotice(address employ1, string amount1,address employ2, string amount2,address employ3, string amount3);
+    event Withdraw(uint amount, uint balance);
+    event SendMoney(address sender, uint balance);
+    address payable admin;
+    address payable employee_one; // PBU supplier
+    address payable employee_two; // Crane
+    address payable employee_three; // Worker
+    uint public PBU;
+    uint public crane;
+    uint public worker;
+    
+
+
+    constructor(address payable _admin, address payable _one, address payable _two, address payable _three, uint _PBU, uint _crane, uint _worker) public payable {
+    admin = _admin;
+    employee_one = _one;
+    employee_two = _two;
+    employee_three = _three;
+    PBU = _PBU;
+    crane = _crane;
+    worker = _worker;
+    msg.sender == admin;
+    }
+    
+    modifier onlyGC() {
+        require(msg.sender==admin,"Not GC");
+        _;}
+        
+    modifier onlyPBU() {
+        require(msg.sender==employee_one,"Not PBU");
+        _;}        
+
+    modifier onlycrane() {
+        require(msg.sender==employee_two,"Not crane");
+        _;}
+
+    modifier onlyworker() {
+        require(msg.sender==employee_three,"Not worker");
+        _;}
+    
+    function PBU_reward() public payable onlyGC returns (bool) {
+        if (PBU == 2  && crane == 0 && worker == 0 ) {
+        employee_one.transfer(4.02 ether);
+        emit SendMoney(employee_one, 4.02 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 0 && worker == 1 ) {
+        employee_one.transfer(5.92 ether);
+        emit SendMoney(employee_one, 5.92 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 0 && worker == 2 ) {
+        employee_one.transfer(6.68 ether);
+        emit SendMoney(employee_one, 6.68 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 1 && worker == 0 ) {
+        employee_one.transfer(4.89 ether);
+        emit SendMoney(employee_one, 4.89 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 1 && worker == 1 ) {
+        employee_one.transfer(8.01 ether);
+        emit SendMoney(employee_one, 8.01 ether);
+        return true;}        
+        
+        if (PBU == 2  && crane == 1 && worker == 2 ) {
+        employee_one.transfer(8.55 ether);
+        emit SendMoney(employee_one, 8.55 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 2 && worker == 0 ) {
+        employee_one.transfer(4.89 ether);
+        emit SendMoney(employee_one, 4.89 ether);
+        return true;}        
+
+        if (PBU == 2  && crane == 2 && worker == 1 ) {
+        employee_one.transfer(7.49 ether);
+        emit SendMoney(employee_one, 7.49 ether);
+        return true;} 
+        
+        if (PBU == 2  && crane == 2 && worker == 2 ) {
+        employee_one.transfer(9.52 ether);
+        emit SendMoney(employee_one, 9.52 ether);
+        return true;}        
+        
+        else {
+            return false;
+    }
+        
+    }
+    
+    function crane_reward() public payable onlyGC returns (bool) {
+
+        if (PBU == 0  && crane == 2 && worker == 0 ) {
+        employee_two.transfer(0.89 ether);
+        emit SendMoney(employee_two, 0.89 ether);
+        return true;}
+        
+        if (PBU == 0  && crane == 2 && worker == 1 ) {
+        employee_two.transfer(2.05 ether);
+        emit SendMoney(employee_two, 2.05 ether);
+        return true;}
+        
+        if (PBU == 0  && crane == 2 && worker == 2 ) {
+        employee_two.transfer(3.82 ether);
+        emit SendMoney(employee_two, 3.82 ether);
+        return true;}
+        
+        if (PBU == 1  && crane == 2 && worker == 0 ) {
+        employee_two.transfer(3.03 ether);
+        emit SendMoney(employee_two, 3.03 ether);
+        return true;}
+        
+        if (PBU == 1  && crane == 2 && worker == 1 ) {
+        employee_two.transfer(3.84 ether);
+        emit SendMoney(employee_two, 3.84 ether);
+        return true;}        
+        
+        if (PBU == 1  && crane == 2 && worker == 2 ) {
+        employee_two.transfer(5.01 ether);
+        emit SendMoney(employee_two, 5.01 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 2 && worker == 0 ) {
+        employee_two.transfer(3 ether);
+        emit SendMoney(employee_two, 3 ether);
+        return true;}        
+
+        if (PBU == 2  && crane == 2 && worker == 1 ) {
+        employee_two.transfer(3.36 ether);
+        emit SendMoney(employee_two, 3.36 ether);
+        return true;} 
+        
+        if (PBU == 2  && crane == 2 && worker == 2 ) {
+        employee_two.transfer(5.87 ether);
+        emit SendMoney(employee_two, 5.87 ether);
+        return true;}        
+        
+        else {
+            return false;
+    }
+    }
+
+    function worker_reward() public payable onlyGC returns (bool) {
+
+        if (PBU == 0  && crane == 0 && worker == 2 ) {
+        employee_three.transfer(7.14 ether);
+        emit SendMoney(employee_three, 7.14 ether);
+        return true;}
+        
+        if (PBU == 0  && crane == 1 && worker == 2 ) {
+        employee_three.transfer(8.07 ether);
+        emit SendMoney(employee_three, 8.07 ether);
+        return true;}
+        
+        if (PBU == 0  && crane == 2 && worker == 2 ) {
+        employee_three.transfer(9.97 ether);
+        emit SendMoney(employee_three, 9.97 ether);
+        return true;}
+        
+        if (PBU == 1  && crane == 0 && worker == 2 ) {
+        employee_three.transfer(8.10 ether);
+        emit SendMoney(employee_three, 8.10 ether);
+        return true;}
+        
+        if (PBU == 1  && crane == 1 && worker == 2 ) {
+        employee_three.transfer(10.69 ether);
+        emit SendMoney(employee_three, 10.69 ether);
+        return true;}        
+        
+        if (PBU == 1  && crane == 2 && worker == 2 ) {
+        employee_three.transfer(11.95 ether);
+        emit SendMoney(employee_three, 11.95 ether);
+        return true;}
+        
+        if (PBU == 2  && crane == 0 && worker == 2 ) {
+        employee_three.transfer(8.87 ether);
+        emit SendMoney(employee_three, 8.87 ether);
+        return true;}        
+
+        if (PBU == 2  && crane == 1 && worker == 2 ) {
+        employee_three.transfer(11.24 ether);
+        emit SendMoney(employee_three, 11.24 ether);
+        return true;} 
+        
+        if (PBU == 2  && crane == 2 && worker == 2 ) {
+        employee_three.transfer(14 ether);
+        emit SendMoney(employee_three, 14 ether);
+        return true;}        
+        
+        else {
+            return false;
+    }
+
+
+        
+    }    
+
+    function PBU_penalty() public onlyPBU payable {
+
+        if (PBU == 0  && crane == 0 && worker == 0) {
+        require(msg.value == 15.57 ether);
+        emit SendMoney(employee_one, msg.value);}
+        
+        if (PBU == 0  && crane == 0 && worker == 1) {
+        require(msg.value == 16.02 ether);
+        emit SendMoney(employee_one, msg.value);}       
+        
+        if (PBU == 0  && crane == 0 && worker == 2) {
+        require(msg.value == 16.80 ether);
+        emit SendMoney(employee_one, msg.value);}       
+
+        if (PBU == 0  && crane == 1 && worker == 0) {
+        require(msg.value == 14.64 ether);
+        emit SendMoney(employee_one, msg.value);}               
+
+        if (PBU == 0  && crane == 1 && worker == 1) {
+        require(msg.value == 16.46 ether);
+        emit SendMoney(employee_one, msg.value);}  
+
+        if (PBU == 0  && crane == 1 && worker == 2) {
+        require(msg.value == 18.41 ether);
+        emit SendMoney(employee_one, msg.value);} 
+
+        if (PBU == 0  && crane == 2 && worker == 0) {
+        require(msg.value == 16.21 ether);
+        emit SendMoney(employee_one, msg.value);} 
+        
+        if (PBU == 0  && crane == 2 && worker == 1) {
+        require(msg.value == 17.83 ether);
+        emit SendMoney(employee_one, msg.value);}
+        
+        if (PBU == 0  && crane == 2 && worker == 2) {
+        require(msg.value == 19.52 ether);
+        emit SendMoney(employee_one, msg.value);}         
+    }
+    
+    function crane_penalty() public onlycrane payable {
+
+        if (PBU == 0  && crane == 0 && worker == 0) {
+        require(msg.value == 7.42 ether);
+        emit SendMoney(employee_two, msg.value);}
+        
+        if (PBU == 0  && crane == 0 && worker == 1) {
+        require(msg.value == 11.01 ether);
+        emit SendMoney(employee_two, msg.value);}       
+        
+        if (PBU == 0  && crane == 0 && worker == 2) {
+        require(msg.value == 11.80 ether);
+        emit SendMoney(employee_two, msg.value);}       
+
+        if (PBU == 1  && crane == 0 && worker == 0) {
+        require(msg.value == 6.71 ether);
+        emit SendMoney(employee_two, msg.value);}               
+
+        if (PBU == 1  && crane == 0 && worker == 1) {
+        require(msg.value == 11.43 ether);
+        emit SendMoney(employee_two, msg.value);}  
+
+        if (PBU == 1  && crane == 0 && worker == 2) {
+        require(msg.value == 13.44 ether);
+        emit SendMoney(employee_two, msg.value);} 
+
+        if (PBU == 2  && crane == 0 && worker == 0) {
+        require(msg.value == 7.53 ether);
+        emit SendMoney(employee_two, msg.value);} 
+        
+        if (PBU == 2  && crane == 0 && worker == 1) {
+        require(msg.value == 13.08 ether);
+        emit SendMoney(employee_two, msg.value);}
+        
+        if (PBU == 2  && crane == 0 && worker == 2) {
+        require(msg.value == 14.89 ether);
+        emit SendMoney(employee_two, msg.value);}         
+    }
+    
+    function worker_penalty() public onlyworker payable {
+
+        if (PBU == 0  && crane == 0 && worker == 0) {
+        require(msg.value == 8.55 ether);
+        emit SendMoney(employee_three, msg.value);}
+        
+        if (PBU == 0  && crane == 1 && worker == 0) {
+        require(msg.value == 12.21 ether);
+        emit SendMoney(employee_three, msg.value);}       
+        
+        if (PBU == 0  && crane == 2 && worker == 0) {
+        require(msg.value == 13.01 ether);
+        emit SendMoney(employee_three, msg.value);}       
+
+        if (PBU == 1  && crane == 0 && worker == 0) {
+        require(msg.value == 9.53 ether);
+        emit SendMoney(employee_three, msg.value);}               
+
+        if (PBU == 1  && crane == 1 && worker == 0) {
+        require(msg.value == 14.07 ether);
+        emit SendMoney(employee_three, msg.value);}  
+
+        if (PBU == 1  && crane == 2 && worker == 0) {
+        require(msg.value == 14.74 ether);
+        emit SendMoney(employee_three, msg.value);} 
+
+        if (PBU == 2  && crane == 0 && worker == 0) {
+        require(msg.value == 11.21 ether);
+        emit SendMoney(employee_three, msg.value);} 
+        
+        if (PBU == 2  && crane == 1 && worker == 0) {
+        require(msg.value == 16.44 ether);
+        emit SendMoney(employee_three, msg.value);}
+        
+        if (PBU == 2  && crane == 2 && worker == 0) {
+        require(msg.value == 16.71 ether);
+        emit SendMoney(employee_three, msg.value);}         
+    }
+
+
+    function getBalance() public view returns (uint)  {
+        return address(this).balance;
+    }
+    
+    function withdraw(uint amount) public returns(bool) {
+        require(msg.sender == admin);
+        require(amount < address(this).balance);
+        admin.transfer(amount);
+        emit Withdraw(amount, address(this).balance);
+        return true; 
+}
+    
+}    
+
+contract NoticeContract {
+    event PayNotice(address employ1, string amount1,address employ2, string amount2,address employ3, string amount3);
+    address payable admin;
+    address payable employee_one; // PBU supplier
+    address payable employee_two; // Crane
+    address payable employee_three; // Worker
+    uint public PBU;
+    uint public crane;
+    uint public worker;
+    
+    constructor(address payable _admin, address payable _one, address payable _two, address payable _three, uint _PBU, uint _crane, uint _worker) public payable {
+    admin = _admin;
+    employee_one = _one;
+    employee_two = _two;
+    employee_three = _three;
+    PBU = _PBU;
+    crane = _crane;
+    worker = _worker;
+    msg.sender == admin;
+    }
+    
+    function SendNotice() public {
+        msg.sender == admin;
+        if (PBU == 0  && crane == 0 && worker == 0 ) {
+            emit PayNotice(employee_one,'-15.57 ether', employee_two, '-7.42 ether', employee_three, '-8.55 ether');
+        }
+
+        if (PBU == 0  && crane == 0 && worker == 1 ) {
+            emit PayNotice(employee_one,'-16.02 ether', employee_two, '-11.01 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 0  && crane == 0 && worker == 2 ) {
+            emit PayNotice(employee_one,'-16.80 ether', employee_two, '-11.80 ether', employee_three, '7.14 ether');
+        }
+
+        if (PBU == 0  && crane == 1 && worker == 0 ) {
+            emit PayNotice(employee_one,'-14.64 ether', employee_two, '0 ether', employee_three, '-12.21 ether');
+        }
+        
+        if (PBU == 0  && crane == 1 && worker == 1 ) {
+            emit PayNotice(employee_one,'-16.46 ether', employee_two, '0 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 0  && crane == 1 && worker == 2 ) {
+            emit PayNotice(employee_one,'-18.41 ether', employee_two, '0 ether', employee_three, '8.07 ether');
+        }
+
+        if (PBU == 0  && crane == 2 && worker == 0 ) {
+            emit PayNotice(employee_one,'-16.21 ether', employee_two, '0.89 ether', employee_three, '-13.01 ether');
+        }
+
+        if (PBU == 0  && crane == 2 && worker == 1 ) {
+            emit PayNotice(employee_one,'-17.83 ether', employee_two, '2.05 ether', employee_three, '0 ether');
+        }
+        if (PBU == 0  && crane == 2 && worker == 2 ) {
+            emit PayNotice(employee_one,'-19.52 ether', employee_two, '3.82 ether', employee_three, '9.97 ether');
+        }
+
+        if (PBU == 1  && crane == 0 && worker == 0 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '-6.71 ether', employee_three, '-9.53 ether');
+        }
+
+        if (PBU == 1  && crane == 0 && worker == 1 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '-11.43 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 1  && crane == 0 && worker == 2 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '-13.44 ether', employee_three, '8.10 ether');
+        }
+
+        if (PBU == 1  && crane == 1 && worker == 0 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '0 ther', employee_three, '-14.07 ether');
+        }
+
+        if (PBU == 1  && crane == 1 && worker == 1 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '0 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 1  && crane == 1 && worker == 2 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '0 ether', employee_three, '10.69 ether');
+        }
+
+        if (PBU == 1  && crane == 2 && worker == 0 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '3.03 ether', employee_three, '-14.74 ether');
+        }
+
+        if (PBU == 1  && crane == 2 && worker == 1 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '3.84 ether', employee_three, '0 ether');
+        }
+        
+        if (PBU == 1  && crane == 2 && worker == 2 ) {
+            emit PayNotice(employee_one,'0 ether', employee_two, '5.01 ether', employee_three, '11.95 ether');
+        }        
+
+        if (PBU == 2  && crane == 0 && worker == 0 ) {
+            emit PayNotice(employee_one,'4.02 ether', employee_two, '-7.53 ether', employee_three, '-11.21 ether');
+        }
+
+        if (PBU == 2  && crane == 0 && worker == 1 ) {
+            emit PayNotice(employee_one,'5.92 ether', employee_two, '-13.08 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 2  && crane == 0 && worker == 2 ) {
+            emit PayNotice(employee_one,'6.68 ether', employee_two, '-14.89 ether', employee_three, '8.87 ether');
+        }
+
+        if (PBU == 2  && crane == 1 && worker == 0 ) {
+            emit PayNotice(employee_one,'4.89 ether', employee_two, '0 ether', employee_three, '-16.44 ether');
+        }
+
+        if (PBU == 2  && crane == 1 && worker == 1 ) {
+            emit PayNotice(employee_one,'8.01 ether', employee_two, '0 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 2  && crane == 1 && worker == 2 ) {
+            emit PayNotice(employee_one,'8.55 ether', employee_two, '0 ether', employee_three, '11.24 ether');
+        }
+
+        if (PBU == 2  && crane == 2 && worker == 0 ) {
+            emit PayNotice(employee_one,'4.89 ether', employee_two, '3 ether', employee_three, '-16.71 ether');
+        }
+
+        if (PBU == 2  && crane == 2 && worker == 1 ) {
+            emit PayNotice(employee_one,'7.49 ether', employee_two, '3.36 ether', employee_three, '0 ether');
+        }
+
+        if (PBU == 2  && crane == 2 && worker == 2 ) {
+            emit PayNotice(employee_one,'9.52 ether', employee_two, '5.87 ether', employee_three, '14 ether');
+        }
+    }}
+    
+
+
+
+    
+
