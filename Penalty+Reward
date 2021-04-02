@@ -24,6 +24,7 @@ contract ShapleyValue {
     worker = _worker;
     msg.sender == admin;
     }
+
     
     modifier onlyGC() {
         require(msg.sender==admin,"Not GC");
@@ -352,9 +353,13 @@ contract NoticeContract {
     worker = _worker;
     msg.sender == admin;
     }
+
+    modifier onlyGC() {
+        require(msg.sender==admin,"Not GC");
+        _;}    
     
-    function SendNotice() public {
-        msg.sender == admin;
+    function SendNotice() public onlyGC {
+        
         if (PBU == 0  && crane == 0 && worker == 0 ) {
             emit PayNotice(employee_one,'-15.57 ether', employee_two, '-7.42 ether', employee_three, '-8.55 ether');
         }
