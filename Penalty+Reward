@@ -136,7 +136,7 @@ contract NoticeContract {
     }}
 
 contract PBUContract {
-    event Withdraw(uint amount, uint balance);
+    event Withdraw(address sender, uint balance);
     event SendMoney(address sender, uint balance);
     event RequestMoney(address sender, uint balance);
     address payable admin;
@@ -155,7 +155,7 @@ contract PBUContract {
     PBU = _PBU;
     crane = _crane;
     worker = _worker;
-    msg.sender == admin;
+    require(msg.sender == admin);
     }
 
     modifier onlyGC() {
@@ -163,7 +163,7 @@ contract PBUContract {
         _;}
     modifier onlyPBU() {
         require(msg.sender==employee_one,"Not PBU");
-        _;}        
+        _;}
 
     function PBU_retainage() public onlyGC payable{
         if (PBU == 0  && crane == 0 && worker == 0 ) {
@@ -309,27 +309,32 @@ contract PBUContract {
         
     }
     function PBU_penalty(uint amount) public onlyGC payable  {
-        if(address(this).balance >= amount) {
-            admin.transfer(amount);}
+        uint penalty = amount * 1 ether;
+        if(address(this).balance >= penalty) {
+            admin.transfer(penalty);}
         else {
             uint request;
             admin.transfer(address(this).balance);
-            request = amount-address(this).balance;
+            request = (amount* 1 ether) - address(this).balance;
             emit RequestMoney(employee_one,request);
             }
     }
     function payhere(uint amount) public onlyPBU payable {
-        msg.value == amount;
+        uint pay = amount * 1 ether;
+        admin.transfer(pay);
     }
     function getBalance() public view returns (uint)  {
         return address(this).balance;
     }
-    function withdraw(uint amount) public returns(bool) {
-        require(msg.sender == admin);
-        require(amount < address(this).balance);
-        admin.transfer(amount);
-        emit Withdraw(amount, address(this).balance);
-        return true;}
+
+    function withdraw(uint amount) public onlyGC returns(bool) {
+        uint remain = amount * 1 ether;
+        require(remain <= address(this).balance);
+        admin.transfer(remain);
+        return true;
+
+    }
+
 }
 
 contract CraneContract {
@@ -352,7 +357,7 @@ contract CraneContract {
     PBU = _PBU;
     crane = _crane;
     worker = _worker;
-    msg.sender == admin;
+    require(msg.sender == admin);
     }
     
     modifier onlyGC() {
@@ -506,27 +511,31 @@ contract CraneContract {
     }
     }
     function crane_penalty(uint amount) public onlyGC payable  {
-        if(address(this).balance >= amount) {
-            admin.transfer(amount);}
+        uint penalty = amount * 1 ether;
+        if(address(this).balance >= penalty) {
+            admin.transfer(penalty);}
         else {
             uint request;
             admin.transfer(address(this).balance);
-            request = amount-address(this).balance;
+            request = (amount * 1 ether) - address(this).balance;
             emit RequestMoney(employee_two,request);}
         
     }
     function payhere(uint amount) public onlycrane payable {
-        msg.value == amount;
-    }    
+        uint pay = amount * 1 ether;
+        admin.transfer(pay);
+    }
     function getBalance() public view returns (uint)  {
         return address(this).balance;
     }
-    function withdraw(uint amount) public returns(bool) {
-        require(msg.sender == admin);
-        require(amount < address(this).balance);
-        admin.transfer(amount);
-        emit Withdraw(amount, address(this).balance);
-        return true; } 
+
+    function withdraw(uint amount) public onlyGC returns(bool) {
+        uint remain = amount * 1 ether;
+        require(remain <= address(this).balance);
+        admin.transfer(remain);
+        return true;
+
+    }
 }
 
 contract WorkerContract {
@@ -706,25 +715,30 @@ contract WorkerContract {
         
     }    
     function worker_penalty(uint amount) public onlyGC payable  {
-        if(address(this).balance >= amount) {
-            admin.transfer(amount);}
+        uint penalty = amount * 1 ether;
+        if(address(this).balance >= penalty) {
+            admin.transfer(penalty);}
         else {
             uint request;
+            request = (amount * 1 ether) - address(this).balance;
             admin.transfer(address(this).balance);
-            request = amount-address(this).balance;
             emit RequestMoney(employee_three,request);}
         
     }
     function payhere(uint amount) public onlyworker payable {
-        msg.value == amount;
-    }  
+        uint pay = amount * 1 ether;
+        admin.transfer(pay);
+    }
     function getBalance() public view returns (uint)  {
         return address(this).balance;
     }
-    function withdraw(uint amount) public returns(bool) {
-        require(msg.sender == admin);
-        require(amount < address(this).balance);
-        admin.transfer(amount);
-        emit Withdraw(amount, address(this).balance);
-        return true;}     
+
+    function withdraw(uint amount) public onlyGC returns(bool) {
+        uint remain = amount * 1 ether;
+        require(remain <= address(this).balance);
+        admin.transfer(remain);
+        return true;
+
+    }
+    
 }
