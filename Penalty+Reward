@@ -1,7 +1,7 @@
 pragma solidity ^0.6.0;
 
 contract NoticeContract {
-    event PayNotice(address employ1, string amount1,address employ2, string amount2,address employ3, string amount3);
+    event PayNotice(address employ1, string amount1,address employ2, string amount2,address employ3, string amount3); //event defined will be emited later
     address payable admin;
     address payable employee_one; // PBU supplier
     address payable employee_two; // Crane
@@ -10,6 +10,7 @@ contract NoticeContract {
     uint public crane;
     uint public worker;
     
+    // contract initiator, define criteria to trigger contract
     constructor(address payable _admin, address payable _one, address payable _two, address payable _three, uint _PBU, uint _crane, uint _worker) public payable {
     admin = _admin;
     employee_one = _one;
@@ -23,8 +24,9 @@ contract NoticeContract {
 
     modifier onlyGC() {
         require(msg.sender==admin,"Not GC");
-        _;}    
+        _;}    //this function defines that only GC can operate
     
+    //this is payment notice, sending notice to each participant how much they will assign when detecting the scenarios
     function SendNotice() public onlyGC {
         
         if (PBU == 0  && crane == 0 && worker == 0 ) {
@@ -248,12 +250,14 @@ contract PBUContract {
             require(msg.value == 102182 ether);            
         }         
     }
+    
+    //this is reward function, defines how much rewards will be assigned under each scenario.
     function PBU_reward() public payable onlyGC returns (bool) {
         if (PBU == 2  && crane == 0 && worker == 0 ) {
             require(msg.value == 2815 ether);
             employee_one.transfer(2815 ether);
             emit SendMoney(employee_one, 2815 ether);
-            return true;}
+            return true;} //make it public, and payable is used so that money can be transferred among different accounts
         
         if (PBU == 2  && crane == 0 && worker == 1 ) {
             require(msg.value == 4146 ether);
@@ -308,25 +312,31 @@ contract PBUContract {
     }
         
     }
+    
+    //this is penalty function for PBU
     function PBU_penalty(uint amount) public onlyGC payable  {
         uint penalty = amount * 1 ether;
         if(address(this).balance >= penalty) {
-            admin.transfer(penalty);}
+            admin.transfer(penalty);} //if retainage is not enough to pay the penalty, retainage will transfer to GC's account first
         else {
             uint request;
             admin.transfer(address(this).balance);
             request = (amount* 1 ether) - address(this).balance;
-            emit RequestMoney(employee_one,request);
+            emit RequestMoney(employee_one,request); //if retainage is enough to pay the penalty, then using retainge for penalty
             }
     }
+    //this function is where they should pay for the remained amounts of penalty.
     function payhere(uint amount) public onlyPBU payable {
         uint pay = amount * 1 ether;
         admin.transfer(pay);
     }
+    
+    //check contract balance
     function getBalance() public view returns (uint)  {
         return address(this).balance;
     }
-
+    
+    //withdraw the remained amounts in the smart contract
     function withdraw(uint amount) public onlyGC returns(bool) {
         uint remain = amount * 1 ether;
         require(remain <= address(this).balance);
@@ -337,6 +347,7 @@ contract PBUContract {
 
 }
 
+//Similarly, this contract is specific for crane
 contract CraneContract {
     event Withdraw(uint amount, uint balance);
     event SendMoney(address sender, uint balance);
@@ -713,7 +724,8 @@ contract WorkerContract {
 
 
         
-    }    
+    }  
+
     function worker_penalty(uint amount) public onlyGC payable  {
         uint penalty = amount * 1 ether;
         if(address(this).balance >= penalty) {
