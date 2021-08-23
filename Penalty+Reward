@@ -168,88 +168,9 @@ contract PBUContract {
         _;}
 
     function PBU_retainage() public onlyGC payable{
-        if (PBU == 0  && crane == 0 && worker == 0 ) {
-            require(msg.value == 157545 ether);
-        }
-        if (PBU == 0  && crane == 0 && worker == 1 ) {
-            require(msg.value == 151470 ether);            
-        }
-        if (PBU == 0  && crane == 0 && worker == 2 ) {
-            require(msg.value == 144585 ether);            
-        }
-        if (PBU == 0  && crane == 1 && worker == 0 ) {
-            require(msg.value == 151227 ether);            
-        }        
-        if (PBU == 0  && crane == 1 && worker == 1 ) {
-            require(msg.value == 138915 ether);            
-        }
-        if (PBU == 0  && crane == 1 && worker == 2 ) {
-            require(msg.value == 132557 ether);            
-        }
-        if (PBU == 0  && crane == 2 && worker == 0 ) {
-            require(msg.value == 153171 ether);            
-        }
-        if (PBU == 0  && crane == 2 && worker == 1 ) {
-            require(msg.value == 138186 ether);            
-        }
-        if (PBU == 0  && crane == 2 && worker == 2 ) {
-            require(msg.value == 128142 ether);            
-        }
-        if (PBU == 1  && crane == 0 && worker == 0 ) {
-            require(msg.value == 138672 ether);            
-        }
-        if (PBU == 1  && crane == 0 && worker == 1 ) {
-            require(msg.value == 133650 ether);            
-        }
-        if (PBU == 1  && crane == 0 && worker == 2 ) {
-            require(msg.value == 127778 ether);            
-        }   
-        if (PBU == 1  && crane == 1 && worker == 0 ) {
-            require(msg.value == 136364 ether);            
-        }
-        if (PBU == 1  && crane == 1 && worker == 1 ) {
-            require(msg.value == 123039 ether);            
-        }
-        if (PBU == 1  && crane == 1 && worker == 2 ) {
-            require(msg.value == 114534 ether);            
-        }     
-        if (PBU == 1  && crane == 2 && worker == 0 ) {
-            require(msg.value == 133934 ether);            
-        } 
-        if (PBU == 1  && crane == 2 && worker == 1 ) {
-            require(msg.value == 119840 ether);            
-        }
-        if (PBU == 1  && crane == 2 && worker == 2 ) {
-            require(msg.value == 110079 ether);            
-        } 
-        if (PBU == 2  && crane == 0 && worker == 0 ) {
-            require(msg.value == 137052 ether);            
-        } 
-        if (PBU == 2  && crane == 0 && worker == 1 ) {
-            require(msg.value == 129479 ether);            
-        } 
-        if (PBU == 2  && crane == 0 && worker == 2 ) {
-            require(msg.value == 122472 ether);            
-        }   
-        if (PBU == 2  && crane ==1 && worker == 0 ) {
-            require(msg.value == 133772 ether);            
-        } 
-        if (PBU == 2  && crane ==1 && worker == 1 ) {
-            require(msg.value == 116559 ether);            
-        } 
-        if (PBU == 2  && crane ==1 && worker == 2 ) {
-            require(msg.value == 108176 ether);            
-        } 
-        if (PBU == 2  && crane ==2 && worker == 0 ) {
-            require(msg.value == 131058 ether);            
-        } 
-        if (PBU == 2  && crane ==2 && worker == 1 ) {
-            require(msg.value == 114413 ether);            
-        }    
-        if (PBU == 2  && crane ==2 && worker == 2 ) {
-            require(msg.value == 102182 ether);            
-        }         
-    }
+    
+          require(msg.value == 97200 ether);
+     }
     
     //this is reward function, defines how much rewards will be assigned under each scenario.
     function PBU_reward() public payable onlyGC returns (bool) {
